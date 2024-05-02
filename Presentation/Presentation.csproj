@@ -9,7 +9,7 @@
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 <ItemGroup>
-  <ProjectReference Include="..\Application\Application\Application.csproj" />
+  <ProjectReference Include="..\Application\Application.csproj" />
 </ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />

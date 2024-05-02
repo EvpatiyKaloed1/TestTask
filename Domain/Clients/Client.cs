@@ -42,13 +42,13 @@ public sealed class Client
         Name = request.Name ?? Name;
         Type = request.Type ?? Type;
 
-        if(Type == ClientType.Individual)
+        if (Type == ClientType.Individual)
         {
             _founders = null;
         }
-        if(Type == ClientType.LegalEntity)
+        if (Type == ClientType.LegalEntity)
         {
-            if(request.Founder == null)
+            if (request.Founder == null)
             {
                 throw new InvalidOperationException("При переводе в статус ЮЛ необходимо указать учредителя");
             }

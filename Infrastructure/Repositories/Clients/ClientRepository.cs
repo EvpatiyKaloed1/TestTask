@@ -20,7 +20,7 @@ public class ClientRepository : IClientRepository
     {
         var clientDto = client.Adapt<ClientDto>();
 
-        await _clientDatabase.Founders.Where(x => clientDto.Founders.Select(x=>x.Id).Contains(x.Id)).ExecuteDeleteAsync(cancellationToken: cancellationToken);
+        await _clientDatabase.Founders.Where(x => clientDto.Founders.Select(x => x.Id).Contains(x.Id)).ExecuteDeleteAsync(cancellationToken: cancellationToken);
 
         await _clientDatabase.Founders.AddRangeAsync(clientDto.Founders, cancellationToken);
         await _clientDatabase.Clients.AddAsync(clientDto, cancellationToken);
@@ -35,7 +35,10 @@ public class ClientRepository : IClientRepository
 
     public async Task<IEnumerable<Client>> GetAllAsync(CancellationToken token)
     {
-        var dbClients = await _clientDatabase.Clients.ToListAsync(token);
+        var dbClients = await _clientDatabase.Clients
+            .Include(x => x.Founders)
+            .AsNoTracking()
+            .ToListAsync(token);
 
         return dbClients.Adapt<IEnumerable<Client>>();
     }
@@ -64,7 +67,7 @@ public class ClientRepository : IClientRepository
     {
         var dbClient = client.Adapt<ClientDto>();
 
-        if(dbClient.Founders == null)
+        if (dbClient.Founders == null)
         {
             await _clientDatabase.Founders
                 .Where(x => x.ClientId == dbClient.Id)

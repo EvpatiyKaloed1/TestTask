@@ -1,7 +1,6 @@
 ﻿using Application.Commands.Founders.CreateFounder;
 using Application.Commands.Founders.DeleteFounder;
 using Application.Commands.Founders.UpdateFounder;
-using Application.Queries;
 using Application.Queries.Founders;
 using Mapster;
 using MediatR;

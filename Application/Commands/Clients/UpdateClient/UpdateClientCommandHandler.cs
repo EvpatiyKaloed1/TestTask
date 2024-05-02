@@ -34,7 +34,7 @@ public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, C
             throw new NotFoundException(request.Id);
         }
 
-        if(request.Type == ClientType.LegalEntity)
+        if (request.Type == ClientType.LegalEntity)
         {
             var newFounder = await _founderRepository.GetFounderByIdAsync(request.Founder.Value, cancellationToken);
             var updateRequest = new UpdateClientDto(request.Inn, request.Type, request.Name, newFounder);
@@ -42,7 +42,7 @@ public class UpdateClientCommandHandler : IRequestHandler<UpdateClientCommand, C
         }
         else
         {
-            client.Update(request.Adapt<UpdateClientDto>());    
+            client.Update(request.Adapt<UpdateClientDto>());
         }
 
         await _clientRepository.UpdateAsync(client, cancellationToken);

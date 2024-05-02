@@ -3,7 +3,6 @@ using Application.Commands.Clients.CreateClient;
 using Application.Commands.Clients.DeleteClient;
 using Application.Commands.Clients.DeleteFounders;
 using Application.Commands.Clients.UpdateClient;
-using Application.Queries;
 using Application.Queries.Clients;
 using Mapster;
 using MediatR;
@@ -68,7 +67,7 @@ public class ClientController : Controller
     [HttpDelete]
     [SwaggerOperation(Summary = "Удаление клиента")]
     [SwaggerResponse(StatusCodes.Status200OK, "Клиент успешно удален")]
-    public async Task DeleteClientAsync([FromQuery]Guid id, CancellationToken token)
+    public async Task DeleteClientAsync([FromQuery] Guid id, CancellationToken token)
     {
         await _sender.Send(new DeleteClientCommand(id), token);
     }
