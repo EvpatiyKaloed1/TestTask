@@ -23,6 +23,7 @@ public sealed class UpdateFounderCommandHanlder : IRequestHandler<UpdateFounderC
         {
             throw new NotFoundException(request.Id);
         }
+
         founder.Update(request.Adapt<UpdateFounderDto>());
         await _repository.UpdateAsync(founder, cancellationToken);
 

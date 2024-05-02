@@ -8,13 +8,13 @@ namespace Domain.Clients;
 
 public sealed class Client
 {
-    public readonly List<Founder>? _founders;
+    private List<Founder>? _founders;
 
     public Inn Inn { get; private set; }
     public ClientName Name { get; private set; }
     public ClientType Type { get; private set; }
     public Dates Date { get; private set; }
-    public IReadOnlyList<Founder> Founders => _founders.AsReadOnly();
+    public IReadOnlyList<Founder>? Founders => _founders?.AsReadOnly();
     public Guid Id { get; private set; }
 
     public Client(Inn inn, ClientType type, Dates dates, ClientName name, Guid? id = null, IEnumerable<Founder>? founders = null)
@@ -41,6 +41,21 @@ public sealed class Client
         Inn = request.Inn ?? Inn;
         Name = request.Name ?? Name;
         Type = request.Type ?? Type;
+
+        if(Type == ClientType.Individual)
+        {
+            _founders = null;
+        }
+        if(Type == ClientType.LegalEntity)
+        {
+            if(request.Founder == null)
+            {
+                throw new InvalidOperationException("При переводе в статус ЮЛ необходимо указать учредителя");
+            }
+
+            _founders = new List<Founder> { request.Founder };
+        }
+
         Date = new Dates(Date.Created, DateTime.Now);
     }
 
@@ -66,7 +81,7 @@ public sealed class Client
 
     private void Validate(ClientType type, IEnumerable<Founder>? founders)
     {
-        if (type == ClientType.Individual && founders?.Any() != false)
+        if (type == ClientType.Individual && (founders?.Any() != false && founders != null))
         {
             throw new InvalidClientTypeException(type);
         }

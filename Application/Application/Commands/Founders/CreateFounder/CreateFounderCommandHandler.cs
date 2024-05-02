@@ -22,8 +22,9 @@ public class CreateFounderCommandHandler : IRequestHandler<CreateFounderCommand,
         {
             throw new InnTakenException(request.Inn);
         }
+
         var newFounder = new Founder(request.Inn, request.FounderFull, new Dates(DateTime.Now));
 
-        return _founderRepository.CreateFounderAsync(newFounder, cancellationToken);
+        return await _founderRepository.CreateFounderAsync(newFounder, cancellationToken);
     }
 }

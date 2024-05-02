@@ -2,7 +2,7 @@
 using Domain.Clients;
 using MediatR;
 
-namespace Application.Queries;
+namespace Application.Queries.Clients;
 
 public class GetClientListQueryHandler : IRequestHandler<GetClientListQuery, IEnumerable<Client>>
 {

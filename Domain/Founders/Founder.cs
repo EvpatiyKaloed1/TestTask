@@ -27,11 +27,11 @@ public sealed class Founder
         {
             Name = new FounderFullName(request.FirstName, Name.LastName, Name.SurName);
         }
-        if (!string.IsNullOrEmpty(request.FirstName))
+        if (!string.IsNullOrEmpty(request.LastName))
         {
             Name = new FounderFullName(Name.FirstName, request.LastName, Name.SurName);
         }
-        if (!string.IsNullOrEmpty(request.FirstName))
+        if (!string.IsNullOrEmpty(request.SurName))
         {
             Name = new FounderFullName(Name.FirstName, Name.LastName, request.SurName);
         }

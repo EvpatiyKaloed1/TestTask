@@ -8,6 +8,7 @@ public class FounderDto
     public string SurName { get; set; }
     public DateTime Created { get; set; }
     public DateTime? Updated { get; set; }
-    public ClientDto Client { get; set; }
+    public Guid? ClientId { get; set; }
+    public ClientDto? Client { get; set; }
     public Guid Id { get; set; }
 }

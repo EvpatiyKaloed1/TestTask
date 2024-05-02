@@ -1,10 +1,11 @@
 ﻿using Application.Commons.Interfaces;
+using Domain.Clients;
 using Domain.Common.ValueObjects;
 using Infrastructure.Dto;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories.Client;
+namespace Infrastructure.Repositories.Clients;
 
 public class ClientRepository : IClientRepository
 {
@@ -15,10 +16,15 @@ public class ClientRepository : IClientRepository
         _clientDatabase = clientDatabase;
     }
 
-    public async Task CreateClientAsync(Domain.Clients.Client client, CancellationToken cancellationToken)
+    public async Task CreateClientAsync(Client client, CancellationToken cancellationToken)
     {
         var clientDto = client.Adapt<ClientDto>();
+
+        await _clientDatabase.Founders.Where(x => clientDto.Founders.Select(x=>x.Id).Contains(x.Id)).ExecuteDeleteAsync(cancellationToken: cancellationToken);
+
+        await _clientDatabase.Founders.AddRangeAsync(clientDto.Founders, cancellationToken);
         await _clientDatabase.Clients.AddAsync(clientDto, cancellationToken);
+
         await _clientDatabase.SaveChangesAsync(cancellationToken);
     }
 
@@ -27,36 +33,44 @@ public class ClientRepository : IClientRepository
         await _clientDatabase.Clients.Where(x => x.Id == id).ExecuteDeleteAsync(cancellationToken: token);
     }
 
-    public async Task<IEnumerable<Domain.Clients.Client>> GetAllAsync(CancellationToken token)
+    public async Task<IEnumerable<Client>> GetAllAsync(CancellationToken token)
     {
         var dbClients = await _clientDatabase.Clients.ToListAsync(token);
 
-        return dbClients.Adapt<IEnumerable<Domain.Clients.Client>>();
+        return dbClients.Adapt<IEnumerable<Client>>();
     }
 
-    public async Task<Domain.Clients.Client> GetClientByIdAsync(Guid id, CancellationToken token)
+    public async Task<Client> GetClientByIdAsync(Guid id, CancellationToken token)
     {
         var dbClient = await _clientDatabase.Clients
         .Include(x => x.Founders)
         .AsNoTracking()
         .FirstOrDefaultAsync(x => x.Id == id, cancellationToken: token);
 
-        return dbClient.Adapt<Domain.Clients.Client>();
+        return dbClient.Adapt<Client>();
     }
 
-    public async Task<Domain.Clients.Client> GetClientByInnAsync(Inn inn, CancellationToken token)
+    public async Task<Client> GetClientByInnAsync(Inn inn, CancellationToken token)
     {
         var dbClient = await _clientDatabase.Clients
         .Include(x => x.Founders)
         .AsNoTracking()
         .FirstOrDefaultAsync(x => x.Inn == inn.InnValue, cancellationToken: token);
 
-        return dbClient.Adapt<Domain.Clients.Client>();
+        return dbClient.Adapt<Client>();
     }
 
-    public async Task UpdateAsync(Domain.Clients.Client client, CancellationToken token)
+    public async Task UpdateAsync(Client client, CancellationToken token)
     {
         var dbClient = client.Adapt<ClientDto>();
+
+        if(dbClient.Founders == null)
+        {
+            await _clientDatabase.Founders
+                .Where(x => x.ClientId == dbClient.Id)
+                .ExecuteUpdateAsync(x => x.SetProperty(x => x.ClientId, y => null), cancellationToken: token);
+        }
+
         _clientDatabase.Clients.Update(dbClient);
         await _clientDatabase.SaveChangesAsync(token);
     }

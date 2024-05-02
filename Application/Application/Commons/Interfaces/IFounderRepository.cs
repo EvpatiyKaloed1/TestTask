@@ -8,7 +8,7 @@ public interface IFounderRepository
     Task<Founder> CreateFounderAsync(Founder founder, CancellationToken cancellationToken);
 
     Task DeleteAsync(Guid id, CancellationToken token);
-
+    Task<IEnumerable<Founder>> GetAllAsync(CancellationToken token);
     Task<Founder> GetFounderByIdAsync(Guid id, CancellationToken cancellationToken);
 
     Task<Founder> GetFounderByInnAsync(Inn inn, CancellationToken cancellationToken);

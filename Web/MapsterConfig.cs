@@ -50,13 +50,13 @@ public static class MapsterConfig
             Id = x.Id
         });
 
-        TypeAdapterConfig<Presentation.Controllers.Client.Dto.UpdateClientDto, UpdateClientCommand>
+        TypeAdapterConfig<UpdateClientDto, UpdateClientCommand>
         .ForType()
-        .MapWith(x => new UpdateClientCommand(x.Id, new Inn(x.Inn), x.Type, new ClientName(x.Name)));
+        .MapWith(x => new UpdateClientCommand(x.Id, x.Inn != null ? new Inn(x.Inn) : null, x.Type, x.Founder, x.Name != null ? new ClientName(x.Name) : null));
 
         TypeAdapterConfig<UpdateClientCommand, Domain.Clients.Dto.UpdateClientDto>
         .ForType()
-        .MapWith(x => new Domain.Clients.Dto.UpdateClientDto(x.Inn, x.Type, x.Name));
+        .MapWith(x => new Domain.Clients.Dto.UpdateClientDto(x.Inn, x.Type, x.Name, null));
 
         TypeAdapterConfig<ClientDto, Client>
         .ForType()
