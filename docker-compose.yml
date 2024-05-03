@@ -1,0 +1,8 @@
+version: "3.9"
+
+services:
+  test.task:
+    image: evpatiykaloed/testtask
+    ports:
+      - "5042:8080"
+  

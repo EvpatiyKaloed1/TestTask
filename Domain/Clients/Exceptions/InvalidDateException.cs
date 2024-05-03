@@ -1,4 +1,4 @@
-﻿namespace Domain.Clients.Exeptions;
+﻿namespace Domain.Clients.Exceptions;
 
 public class InvalidDateException : Exception
 {

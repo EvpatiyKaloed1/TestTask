@@ -1,6 +1,6 @@
 ﻿using Application.Commons.Interfaces;
 using Domain.Clients;
-using Domain.Clients.Exeptions;
+using Domain.Clients.Exceptions;
 using Domain.Common.ValueObjects;
 using MediatR;
 

@@ -1,7 +1,7 @@
 ﻿using Application.Commons.Interfaces;
 using Domain.Clients;
 using Domain.Clients.Dto;
-using Domain.Clients.Exeptions;
+using Domain.Clients.Exceptions;
 using Domain.Clients.ValueObjects;
 using Domain.Common.ValueObjects;
 using Mapster;

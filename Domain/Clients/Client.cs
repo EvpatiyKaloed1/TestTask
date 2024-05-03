@@ -1,5 +1,5 @@
 ﻿using Domain.Clients.Dto;
-using Domain.Clients.Exeptions;
+using Domain.Clients.Exceptions;
 using Domain.Clients.ValueObjects;
 using Domain.Common.ValueObjects;
 using Domain.Founders;
@@ -80,14 +80,16 @@ public sealed class Client
     }
 
     private void Validate(ClientType type, IEnumerable<Founder>? founders)
+    
     {
-        if (type == ClientType.Individual && (founders?.Any() != false && founders != null))
-        {
-            throw new InvalidClientTypeException(type);
-        }
+        
         if (founders == null && type == ClientType.LegalEntity)
         {
             throw new ArgumentNullException(nameof(type), "У ЮЛ должны быть учредители");
+        }
+        if (type == ClientType.Individual && founders != null)
+        {
+            throw new InvalidClientTypeException(type);
         }
     }
 }

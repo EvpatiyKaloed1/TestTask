@@ -2,6 +2,7 @@ using Application.Commons.Interfaces;
 using Infrastructure;
 using Infrastructure.Repositories.Clients;
 using Infrastructure.Repositories.Founders;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Web;
 
@@ -28,11 +29,11 @@ builder.Services.AddDbContext<Database>(x => x.UseNpgsql(builder.Configuration.G
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseRewriter(new RewriteOptions().AddRedirect("^$", "swagger"));
+
+app.UseSwagger();
+
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 

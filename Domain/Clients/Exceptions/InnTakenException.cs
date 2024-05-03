@@ -1,6 +1,6 @@
 ﻿using Domain.Common.ValueObjects;
 
-namespace Domain.Clients.Exeptions;
+namespace Domain.Clients.Exceptions;
 
 public class InnTakenException : Exception
 {

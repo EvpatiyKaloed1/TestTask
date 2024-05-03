@@ -1,6 +1,6 @@
 ﻿using Domain.Clients.ValueObjects;
 
-namespace Domain.Clients.Exeptions;
+namespace Domain.Clients.Exceptions;
 
 public class InvalidClientTypeException : Exception
 {

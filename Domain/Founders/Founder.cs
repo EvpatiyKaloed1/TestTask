@@ -13,7 +13,6 @@ public sealed class Founder
         Date = date;
         Id = id ?? Guid.NewGuid();
     }
-
     public Inn Inn { get; private set; }
     public FounderFullName Name { get; private set; }
     public Dates Date { get; private set; }

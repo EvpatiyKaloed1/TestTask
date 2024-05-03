@@ -1,6 +1,6 @@
 ﻿using Application.Commons.Interfaces;
 using Domain.Clients.Dto;
-using Domain.Clients.Exeptions;
+using Domain.Clients.Exceptions;
 using Domain.Founders;
 using Mapster;
 using MediatR;

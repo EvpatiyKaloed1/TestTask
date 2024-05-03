@@ -1,4 +1,4 @@
-﻿using Domain.Clients.Exeptions;
+﻿using Domain.Clients.Exceptions;
 
 namespace Domain.Common.ValueObjects;
 
@@ -19,7 +19,7 @@ public readonly record struct Inn
         }
         if (inn.Length != 10 && inn.Length != 12)
         {
-            throw new InvalidInnExeption();
+            throw new InvalidInnException();
         }
     }
 }

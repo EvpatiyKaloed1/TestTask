@@ -1,4 +1,4 @@
-﻿using Domain.Clients.Exeptions;
+﻿using Domain.Clients.Exceptions;
 
 namespace Domain.Common.ValueObjects;
 

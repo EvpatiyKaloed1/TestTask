@@ -14,7 +14,6 @@ public class AddFoundersCommandHandler : IRequestHandler<AddFoundersCommand, Cli
         _clientRepository = clientRepository;
         _founderRepository = founderRepository;
     }
-
     public async Task<Client> Handle(AddFoundersCommand request, CancellationToken cancellationToken)
     {
         var founders = await _founderRepository.GetFoundersAsync(request.Founders, cancellationToken);
